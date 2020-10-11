@@ -1,32 +1,18 @@
-# Setting the locales, country
-# Supported locales available in /usr/share/i18n/SUPPORTED
-d-i debian-installer/locale string en_US
-
-
-# Keyboard setting
-d-i console-setup/ask_detect boolean false
-d-i keyboard-configuration/xkb-keymap select us
-
-# d-i passwd/user-fullname string ubuntu
-# d-i passwd/username string ubuntu
-# d-i passwd/user-password password ubuntu1234!
-# d-i passwd/user-password-again password ubuntu1234!
-# d-i user-setup/allow-password-weak boolean true
-
-# d-i partman-auto/disk string /dev/sda
-# d-i partman-auto/method string regular
-# d-i partman-partitioning/confirm_write_new_label boolean true
-# d-i partman/choose_partition select finish
-# d-i partman/confirm boolean true
-# d-i partman/confirm_nooverwrite boolean true
-
-# d-i passwd/root-login boolean true
-# d-i passwd/root-password password ubuntu1234!
-# d-i passwd/root-password-again password ubuntu1234!
-
-
-# d-i pkgsel/include string open-vm-tools openssh-server
-
-# d-i grub-installer/only_debian boolean true
-
-# d-i finish-install/reboot_in_progress note
+autoinstall:
+  version: 1
+  identity:
+    hostname: ubuntu-server
+    password: '$6$wdAcoXrU039hKYPd$508Qvbe7ObUnxoj15DRCkzC3qO7edjH0VV7BPNRDYK4QR8ofJaEEF2heacn0QgD.f8pO8SNp83XNdWG6tocBM1'
+    username: ubuntu
+  network:
+    network:
+      version: 2
+      ethernets:
+        ens33:
+          dhcp4: true
+          dhcp-identifier: mac
+  ssh:
+    install-server: true
+  late-commands:
+    - sed -i 's/^#*\(send dhcp-client-identifier\).*$/\1 = hardware;/' /target/etc/dhcp/dhclient.conf
+    - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
