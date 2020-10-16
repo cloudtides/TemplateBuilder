@@ -1,0 +1,35 @@
+{
+  "builders": [
+    {
+      "name": "ubuntu-1804",
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      "headless": false,
+
+      "iso_url": "http://mirrors.163.com/ubuntu-releases/18.04.5/ubuntu-18.04.5-live-server-amd64.iso",
+      "iso_checksum": "sha256:3756b3201007a88da35ee0957fbe6666c495fb3d8ef2e851ed2bd1115dc36446",
+
+      "ssh_username": "ubuntu",
+      "ssh_password": "ubuntu",
+      "ssh_timeout": "30m",
+
+      "http_directory": "http",
+
+      "memory": 1024,
+
+      "boot_wait": "10s",
+      "boot_command": [
+        "<enter><enter><f6><esc><wait> ",
+        "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "<enter>"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["ls /"]
+    }
+  ]
+}

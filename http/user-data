@@ -1,12 +1,18 @@
 #cloud-config
 autoinstall:
   version: 1
-  early-commands:
-    - systemctl stop ssh
+  locale: en_US
+  keyboard:
+    layout: en
+    variant: us
+  apt:
+    primary:
+        - arches: [default]
+          uri: "http://mirrors.163.com/ubuntu/"
   identity:
-    hostname: ubuntu-server
-    password: '$6$wdAcoXrU039hKYPd$508Qvbe7ObUnxoj15DRCkzC3qO7edjH0VV7BPNRDYK4QR8ofJaEEF2heacn0QgD.f8pO8SNp83XNdWG6tocBM1'
+    hostname: ubuntu
     username: ubuntu
+    password: $6$rounds=4096$8dkK1P/oE$2DGKKt0wLlTVJ7USY.0jN9du8FetmEr51yjPyeiR.zKE3DGFcitNL/nF1l62BLJNR87lQZixObuXYny.Mf17K1
   network:
     network:
       version: 2
@@ -15,5 +21,5 @@ autoinstall:
   ssh:
     install-server: true
   late-commands:
-    - sed -i 's/^#*\(send dhcp-client-identifier\).*$/\1 = hardware;/' /target/etc/dhcp/dhclient.conf
     - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu

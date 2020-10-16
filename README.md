@@ -1,13 +1,18 @@
 # GromacsTemplateBuilder
-Build Ubuntu templates with [packer](https://www.packer.io/).
-Fill in server configuration in `json` files.
+Build Ubuntu template with Gromacs by [packer](https://www.packer.io/).
+
+# Prerequisites
+- Install Packer by following the official guide at https://learn.hashicorp.com/tutorials/packer/getting-started-install 
+- Install VMware Fusion or Workstation or Player for your OS if you want to use vmware-iso as builder, or figure out the vCenter/ESXi URL/username/password if you want to use vsphere-iso as builder. 
+- Clone this repo to your local folder
+
+# Commands to build the template
+In the console, run the following command. 
 ```
-packer build ubuntu-16.04.json
-packer build ubuntu-20.04.json
 packer build ubuntu-20.04-local.json
 ```
-Todo:
+
+# Todo:
 - [x] Build Ubuntu 20.04 locally
-- [x] Build Ubuntu 16.04 on ESXi/vCenter server
-- [ ] Build Ubuntu 18.04 locally or on server
-- [ ] Install Gromacs 2020.4 in the template 
+- [x] Install CUDA and other dependencies in the template
+- [x] Install Gromacs 2020.4 in the template 
